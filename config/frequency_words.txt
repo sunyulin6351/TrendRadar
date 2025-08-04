@@ -1,7 +1,9 @@
-DeepSeek
+deepseek
 
 中国联通
 联通
+ChinaUnicom
+Unicom
 
 中国移动
 

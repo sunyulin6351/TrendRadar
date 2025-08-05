@@ -1,0 +1,135 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>频率词统计报告</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1, h2 { color: #333; }
+            table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            .word { font-weight: bold; }
+            .count { text-align: center; }
+            .percentage { text-align: center; }
+            .titles { max-width: 500px; }
+            .source { color: #666; font-style: italic; }
+            .error { color: #d9534f; }
+            .news-link { 
+                color: #007bff; 
+                text-decoration: none; 
+                border-bottom: 1px dotted #007bff;
+            }
+            .news-link:hover { 
+                color: #0056b3; 
+                text-decoration: underline; 
+            }
+            .news-link:visited { 
+                color: #6f42c1; 
+            }
+            .no-link { 
+                color: #333; 
+            }
+            .new-title {
+                background-color: #fff3cd;
+                border: 1px solid #ffc107;
+                border-radius: 3px;
+                padding: 2px 6px;
+                margin: 2px 0;
+            }
+            .new-section {
+                background-color: #d1ecf1;
+                border: 1px solid #bee5eb;
+                border-radius: 5px;
+                padding: 10px;
+                margin-top: 10px;
+            }
+            .new-section h3 {
+                color: #0c5460;
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>频率词统计报告</h1>
+    <p>报告类型: 实时分析</p><p>总标题数: 123</p><p>生成时间: 2025-08-05 16:36:15</p>
+        <table>
+            <tr>
+                <th>排名</th>
+                <th>频率词</th>
+                <th>出现次数</th>
+                <th>占比</th>
+                <th>相关标题</th>
+            </tr>
+    
+            <tr>
+                <td>1</td>
+                <td class="word">人工智能 AI 机器学习 深度学习 大语言模型 大模型 AIGC 生成式 智能体</td>
+                <td class="count">4</td>
+                <td class="percentage">3.25%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/208.htm" target="_blank" class="news-link">前 AMD、英特尔显卡架构师 Raja 再战 GPU，号称要从原子到智能体全面重构</a> <font color='red'><strong>[1]</strong></font> <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [V2EX] <a href="https://www.v2ex.com/t/1150126" target="_blank" class="news-link">AI 能否完成复杂项目的开发</a> <font color='red'><strong>[1]</strong></font> <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/199.htm" target="_blank" class="news-link">真听劝：荣耀 MagicOS 8 月升级 AI 通话助理、YOYO 记忆、个人热点永不关闭选项等功能</a> <font color='red'><strong>[4]</strong></font> <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [V2EX] <a href="https://www.v2ex.com/t/1150106" target="_blank" class="news-link">国内 AI 编码工具推荐用哪一个？</a> [6] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>2</td>
+                <td class="word">小米 Xiaomi</td>
+                <td class="count">3</td>
+                <td class="percentage">2.44%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/203.htm" target="_blank" class="news-link">249 元小米米家便携即热饮水机“绿色款”首销：保温杯大小，插瓶 / 接桶两用</a> <font color='red'><strong>[5]</strong></font> <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/197.htm" target="_blank" class="news-link">今年上半年我国消费级监控摄像头销量 2796 万台同增 0.2%，小米排行第一断崖式领先</a> [11] <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/193.htm" target="_blank" class="news-link">安森美确认为小米 YU7 系列电动 SUV 部分车型供应碳化硅 MOSFET</a> [13] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>3</td>
+                <td class="word">微软 Microsoft</td>
+                <td class="count">2</td>
+                <td class="percentage">1.63%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/202.htm" target="_blank" class="news-link">微软 Xbox 将开辟新战场：APU 变革实现灵活性、性能双重飞跃，挑战游戏 PC</a> [6] <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/194.htm" target="_blank" class="news-link">微软公告：旧版 Office 365 应用 2026 年 1 月将停用听录、听写和朗读功能</a> [12] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>4</td>
+                <td class="word">腾讯 Tencent</td>
+                <td class="count">2</td>
+                <td class="percentage">1.63%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/198.htm" target="_blank" class="news-link">张军回应“云客服”假冒腾讯会议：以为自己眼花了，还好应用名字露出马脚</a> [10] <font color='grey'>- 16时36分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/192.htm" target="_blank" class="news-link">华为游戏中心：腾讯《金铲铲之战》鸿蒙版今年 9 月上线，预计为正式服版本</a> [14] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>5</td>
+                <td class="word">机器人</td>
+                <td class="count">1</td>
+                <td class="percentage">0.81%</td>
+                <td class="titles"><div class='new-title'>🆕 [财联社热门] <a href="https://www.cls.cn/detail/2106034" target="_blank" class="news-link">机器人成八月最强主线？多场盛会密集召开 又一波“上新潮”临近</a> [13] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>6</td>
+                <td class="word">特斯拉 Tesla</td>
+                <td class="count">1</td>
+                <td class="percentage">0.81%</td>
+                <td class="titles"><div class='new-title'>🆕 [参考消息] <a href="https://ckxxapp.ckxx.net/pages/2025/08/05/b16382fa7eaf479ea691b9a48134091d.html" target="_blank" class="news-link">为留住马斯克，特斯拉开出“天价”薪酬</a> [6] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>7</td>
+                <td class="word">华为 Huawei</td>
+                <td class="count">1</td>
+                <td class="percentage">0.81%</td>
+                <td class="titles"><div class='new-title'>🆕 [百度热搜] <a href="https://www.baidu.com/s?wd=%E5%8D%8E%E4%B8%BA%E5%AE%A3%E5%B8%83CANN%E5%85%A8%E9%9D%A2%E5%BC%80%E6%BA%90%E5%BC%80%E6%94%BE" target="_blank" class="news-link">华为宣布CANN全面开源开放</a> [29] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>8</td>
+                <td class="word">网易</td>
+                <td class="count">1</td>
+                <td class="percentage">0.81%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/189.htm" target="_blank" class="news-link">内部人士回应网易游戏宕机：系机房网络故障，排查起来难度非常大</a> [16] <font color='grey'>- 16时36分</font></div></td>
+            </tr>
+        
+        </table>
+    
+    </body>
+    </html>
+    

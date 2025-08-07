@@ -1,0 +1,135 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>频率词统计报告</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1, h2 { color: #333; }
+            table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+            .word { font-weight: bold; }
+            .count { text-align: center; }
+            .percentage { text-align: center; }
+            .titles { max-width: 500px; }
+            .source { color: #666; font-style: italic; }
+            .error { color: #d9534f; }
+            .news-link { 
+                color: #007bff; 
+                text-decoration: none; 
+                border-bottom: 1px dotted #007bff;
+            }
+            .news-link:hover { 
+                color: #0056b3; 
+                text-decoration: underline; 
+            }
+            .news-link:visited { 
+                color: #6f42c1; 
+            }
+            .no-link { 
+                color: #333; 
+            }
+            .new-title {
+                background-color: #fff3cd;
+                border: 1px solid #ffc107;
+                border-radius: 3px;
+                padding: 2px 6px;
+                margin: 2px 0;
+            }
+            .new-section {
+                background-color: #d1ecf1;
+                border: 1px solid #bee5eb;
+                border-radius: 5px;
+                padding: 10px;
+                margin-top: 10px;
+            }
+            .new-section h3 {
+                color: #0c5460;
+                margin-top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>频率词统计报告</h1>
+    <p>报告类型: 实时分析</p><p>总标题数: 159</p><p>生成时间: 2025-08-07 10:10:22</p>
+        <table>
+            <tr>
+                <th>排名</th>
+                <th>频率词</th>
+                <th>出现次数</th>
+                <th>占比</th>
+                <th>相关标题</th>
+            </tr>
+    
+            <tr>
+                <td>1</td>
+                <td class="word">苹果 Apple</td>
+                <td class="count">12</td>
+                <td class="percentage">7.55%</td>
+                <td class="titles"><div class='new-title'>🆕 [华尔街见闻] <a href="https://wallstreetcn.com/articles/3752803" target="_blank" class="news-link">特朗普拟对芯片产品征100%关税，苹果等在美建厂企业可豁免，苹果、台积电盘后涨</a> <font color='red'><strong>[3]</strong></font> <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/620.htm" target="_blank" class="news-link">苹果为 6000 亿美元“美国制造计划”招兵买马，将在美招聘 20000 人</a> <font color='red'><strong>[3]</strong></font> <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/619.htm" target="_blank" class="news-link">初探苹果 iOS 26 App Store：引入热门游戏排行、细分年龄等级、扩展无障碍营养标签</a> <font color='red'><strong>[4]</strong></font> <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/617.htm" target="_blank" class="news-link">苹果 iPhone 17/ Pro 系列官方手机壳曝光，配挂绳孔</a> [6] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/608.htm" target="_blank" class="news-link">16e 立功：苹果打破 iPhone 季节规律，刷新美国历年 Q2 平均售价纪录</a> [11] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/606.htm" target="_blank" class="news-link">特朗普将对芯片进口征收 100% 关税，苹果被豁免</a> [13] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/602.htm" target="_blank" class="news-link">苹果首次：未来全球 iPhone 和 Apple Watch 外层玻璃均为美国造</a> [16] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/600.htm" target="_blank" class="news-link">苹果 1000 亿美元追加投资让特朗普松口：iPhone 短期内不会美国组装</a> [18] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/597.htm" target="_blank" class="news-link">苹果创造历史，正成为首家在美国建立完整端到端半导体芯片供应链的企业</a> [20] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/594.htm" target="_blank" class="news-link">日本政府再向苹果提出新要求：iOS 年内必须开放第三方浏览器引擎</a> [22] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/589.htm" target="_blank" class="news-link">最快 2026 年推出：苹果 MacBook 将整合 5G 蜂窝网络，自研 C2 芯片成关键</a> [26] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [百度热搜] <a href="https://www.baidu.com/s?wd=%E8%8B%B9%E6%9E%9C%E5%B8%82%E5%80%BC%E4%B8%80%E5%A4%9C%E5%A4%A7%E6%B6%A8%E8%B6%851%E4%B8%87%E4%BA%BF%E5%85%83" target="_blank" class="news-link">苹果市值一夜大涨超1万亿元</a> [27] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>2</td>
+                <td class="word">人工智能 AI 机器学习 深度学习 大语言模型 大模型 AIGC 生成式 智能体</td>
+                <td class="count">6</td>
+                <td class="percentage">3.77%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/614.htm" target="_blank" class="news-link">闪迪就 HBF 高带宽闪存结盟 SK 海力士，首款 AI 推理终端设备 2027 年初出样</a> [7] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/612.htm" target="_blank" class="news-link">研究显示：AI 解 6x6 数独都费劲，解释决策时还答非所问</a> [8] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/605.htm" target="_blank" class="news-link">谷歌为全美大学生送福利：未来三年投入 10 亿美元提供 AI 培训及订阅服务</a> [14] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/595.htm" target="_blank" class="news-link">OpenAI 以 1 美元价格向美国政府提供 ChatGPT 企业版服务</a> [21] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/593.htm" target="_blank" class="news-link">微软 Gaming Copilot 公测：目标打造最强游戏辅助，AI 助你做任务</a> [23] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/590.htm" target="_blank" class="news-link">谷歌称其 AI 搜索未导致网站流量下滑，部分网站点击量反而上升</a> [25] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>3</td>
+                <td class="word">科技</td>
+                <td class="count">2</td>
+                <td class="percentage">1.26%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/621.htm" target="_blank" class="news-link">【视频】拒绝平庸！静态品鉴全新小鹏P7：如何拿捏颜值与科技？</a> <font color='red'><strong>[2]</strong></font> <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/588.htm" target="_blank" class="news-link">科技昨夜今晨 0807：英伟达称其芯片不存在后门；淘宝上线“大会员”体系；苹果 iPhone 17 系列发布会或将定档 9 月 9 日...</a> [27] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>4</td>
+                <td class="word">微软 Microsoft</td>
+                <td class="count">2</td>
+                <td class="percentage">1.26%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/609.htm" target="_blank" class="news-link">微软大裁 15000 人，CEO 纳德拉坦诚自己“深感愧疚”</a> [10] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/586.htm" target="_blank" class="news-link">飞进侏罗纪：《微软模拟飞行 2024》扩展包《侏罗纪世界：群岛》来袭</a> [29] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>5</td>
+                <td class="word">台积电 TSMC</td>
+                <td class="count">2</td>
+                <td class="percentage">1.26%</td>
+                <td class="titles"><div class='new-title'>🆕 [金十数据] <a href="https://flash.jin10.com/detail/20250807094654218800" target="_blank" class="news-link">台积电亚盘股价涨超4%。</a> [6] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [凤凰网] <a href="https://news.ifeng.com/c/8lbbFcA9ljG" target="_blank" class="news-link">台积电2nm芯片工艺遭泄密！内鬼曝光</a> [10] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>6</td>
+                <td class="word">华为 Huawei</td>
+                <td class="count">2</td>
+                <td class="percentage">1.26%</td>
+                <td class="titles"><div class='new-title'>🆕 [知乎] <a href="https://www.zhihu.com/question/1936067980447429135" target="_blank" class="news-link">华为宣布 CANN 全面开源开放，这一决定对昇腾生态的长远发展会产生哪些影响？</a> [7] <font color='grey'>- 10时10分</font></div><br><div class='new-title'>🆕 [知乎] <a href="https://www.zhihu.com/question/1935999555821876457" target="_blank" class="news-link">华为又开源三个模型，并更改所有盘古仓为 openPangu，这意味着什么？</a> [9] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>7</td>
+                <td class="word">小米 Xiaomi</td>
+                <td class="count">1</td>
+                <td class="percentage">0.63%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/618.htm" target="_blank" class="news-link">1080P 144Hz，579 元小米 REDMI 旗下 A27 2026 显示器首销</a> <font color='red'><strong>[5]</strong></font> <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+            <tr>
+                <td>8</td>
+                <td class="word">特斯拉 Tesla</td>
+                <td class="count">1</td>
+                <td class="percentage">0.63%</td>
+                <td class="titles"><div class='new-title'>🆕 [IT之家] <a href="https://www.ithome.com/0/873/599.htm" target="_blank" class="news-link">美国空军计划采购特斯拉 Cybertruck 作为军事训练靶车，模拟真实作战场景</a> [19] <font color='grey'>- 10时10分</font></div></td>
+            </tr>
+        
+        </table>
+    
+    </body>
+    </html>
+    

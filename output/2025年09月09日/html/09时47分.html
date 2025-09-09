@@ -1,0 +1,1346 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>热点新闻分析</title>
+        <style>
+            * { box-sizing: border-box; }
+            body { 
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+                margin: 0; 
+                padding: 16px; 
+                background: #fafafa;
+                color: #333;
+                line-height: 1.5;
+            }
+            
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+            }
+            
+            .header {
+                background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+                color: white;
+                padding: 32px 24px;
+                text-align: center;
+            }
+            
+            .header-title {
+                font-size: 22px;
+                font-weight: 700;
+                margin: 0 0 20px 0;
+            }
+            
+            .header-info {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                font-size: 14px;
+                opacity: 0.95;
+            }
+            
+            .info-item {
+                text-align: center;
+            }
+            
+            .info-label {
+                display: block;
+                font-size: 12px;
+                opacity: 0.8;
+                margin-bottom: 4px;
+            }
+            
+            .info-value {
+                font-weight: 600;
+                font-size: 16px;
+            }
+            
+            .content {
+                padding: 24px;
+            }
+            
+            .word-group {
+                margin-bottom: 40px;
+            }
+            
+            .word-group:first-child {
+                margin-top: 0;
+            }
+            
+            .word-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .word-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .word-name {
+                font-size: 17px;
+                font-weight: 600;
+                color: #1a1a1a;
+            }
+            
+            .word-count {
+                color: #666;
+                font-size: 13px;
+                font-weight: 500;
+            }
+            
+            .word-count.hot { color: #dc2626; font-weight: 600; }
+            .word-count.warm { color: #ea580c; font-weight: 600; }
+            
+            .word-index {
+                color: #999;
+                font-size: 12px;
+            }
+            
+            .news-item {
+                margin-bottom: 20px;
+                padding: 16px 0;
+                border-bottom: 1px solid #f5f5f5;
+                position: relative;
+                display: flex;
+                gap: 12px;
+                align-items: center;
+            }
+            
+            .news-item:last-child {
+                border-bottom: none;
+            }
+            
+            .news-item.new::after {
+                content: "NEW";
+                position: absolute;
+                top: 12px;
+                right: 0;
+                background: #fbbf24;
+                color: #92400e;
+                font-size: 9px;
+                font-weight: 700;
+                padding: 3px 6px;
+                border-radius: 4px;
+                letter-spacing: 0.5px;
+            }
+            
+            .news-number {
+                color: #999;
+                font-size: 13px;
+                font-weight: 600;
+                min-width: 20px;
+                text-align: center;
+                flex-shrink: 0;
+                background: #f8f9fa;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: flex-start;
+                margin-top: 8px;
+            }
+            
+            .news-content {
+                flex: 1;
+                min-width: 0;
+                padding-right: 40px;
+            }
+            
+            .news-item.new .news-content {
+                padding-right: 50px;
+            }
+            
+            .news-header {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+                flex-wrap: wrap;
+            }
+            
+            .source-name {
+                color: #666;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            
+            .rank-num {
+                color: #fff;
+                background: #6b7280;
+                font-size: 10px;
+                font-weight: 700;
+                padding: 2px 6px;
+                border-radius: 10px;
+                min-width: 18px;
+                text-align: center;
+            }
+            
+            .rank-num.top { background: #dc2626; }
+            .rank-num.high { background: #ea580c; }
+            
+            .time-info {
+                color: #999;
+                font-size: 11px;
+            }
+            
+            .count-info {
+                color: #059669;
+                font-size: 11px;
+                font-weight: 500;
+            }
+            
+            .news-title {
+                font-size: 15px;
+                line-height: 1.4;
+                color: #1a1a1a;
+                margin: 0;
+            }
+            
+            .news-link {
+                color: #2563eb;
+                text-decoration: none;
+            }
+            
+            .news-link:hover {
+                text-decoration: underline;
+            }
+            
+            .news-link:visited {
+                color: #7c3aed;
+            }
+            
+            .new-section {
+                margin-top: 40px;
+                padding-top: 24px;
+                border-top: 2px solid #f0f0f0;
+            }
+            
+            .new-section-title {
+                color: #1a1a1a;
+                font-size: 16px;
+                font-weight: 600;
+                margin: 0 0 20px 0;
+            }
+            
+            .new-source-group {
+                margin-bottom: 24px;
+            }
+            
+            .new-source-title {
+                color: #666;
+                font-size: 13px;
+                font-weight: 500;
+                margin: 0 0 12px 0;
+                padding-bottom: 6px;
+                border-bottom: 1px solid #f5f5f5;
+            }
+            
+            .new-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 8px 0;
+                border-bottom: 1px solid #f9f9f9;
+            }
+            
+            .new-item:last-child {
+                border-bottom: none;
+            }
+            
+            .new-item-number {
+                color: #999;
+                font-size: 12px;
+                font-weight: 600;
+                min-width: 18px;
+                text-align: center;
+                flex-shrink: 0;
+                background: #f8f9fa;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .new-item-rank {
+                color: #fff;
+                background: #6b7280;
+                font-size: 10px;
+                font-weight: 700;
+                padding: 3px 6px;
+                border-radius: 8px;
+                min-width: 20px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            
+            .new-item-rank.top { background: #dc2626; }
+            .new-item-rank.high { background: #ea580c; }
+            
+            .new-item-content {
+                flex: 1;
+                min-width: 0;
+            }
+            
+            .new-item-title {
+                font-size: 14px;
+                line-height: 1.4;
+                color: #1a1a1a;
+                margin: 0;
+            }
+            
+            .error-section {
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 24px;
+            }
+            
+            .error-title {
+                color: #dc2626;
+                font-size: 14px;
+                font-weight: 600;
+                margin: 0 0 8px 0;
+            }
+            
+            .error-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .error-item {
+                color: #991b1b;
+                font-size: 13px;
+                padding: 2px 0;
+                font-family: 'SF Mono', Consolas, monospace;
+            }
+            
+            @media (max-width: 480px) {
+                body { padding: 12px; }
+                .header { padding: 24px 20px; }
+                .content { padding: 20px; }
+                .header-info { grid-template-columns: 1fr; gap: 12px; }
+                .news-header { gap: 6px; }
+                .news-content { padding-right: 45px; }
+                .news-item { gap: 8px; }
+                .new-item { gap: 8px; }
+                .news-number { width: 20px; height: 20px; font-size: 12px; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="header-title">热点新闻分析</div>
+                <div class="header-info">
+                    <div class="info-item">
+                        <span class="info-label">报告类型</span>
+                        <span class="info-value">实时分析</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">新闻总数</span>
+                        <span class="info-value">459 条</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">热点新闻</span>
+                        <span class="info-value">58 条</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">生成时间</span>
+                        <span class="info-value">09-09 09:47</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">人工智能 AI 机器学习 深度学习 大语言模型 大模型 AIGC 生成式 智能体</div>
+                            <div class="word-count hot">18 条</div>
+                        </div>
+                        <div class="word-index">1/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num top">1</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/411.htm" target="_blank" class="news-link">SiFive 推出第二代 RISC-V AI 处理器内核，包含两款全新边缘 IP</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">Github</span><span class="rank-num top">2</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://github.com/microsoft/ai-agents-for-beginners" target="_blank" class="news-link">microsoft /      ai-agents-for-beginners</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">3</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">华尔街见闻</span><span class="rank-num top">3</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://wallstreetcn.com/articles/3755130" target="_blank" class="news-link">沪指震荡涨0.4%，中国联通涨超4%，CPO等AI硬件股再度大跌，恒科指超1%，百度涨超9%创年内新高、阿里涨超4%</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">4</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">Github</span><span class="rank-num top">3</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://github.com/zama-ai/fhevm" target="_blank" class="news-link">zama-ai /      fhevm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">5</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">金十数据</span><span class="rank-num top">3</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://flash.jin10.com/detail/20250909092002987800" target="_blank" class="news-link">OpenAI高管考虑迁离加州应对监管 避免重组受挫</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">6</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">华尔街见闻</span><span class="rank-num high">4</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://wallstreetcn.com/articles/3755129" target="_blank" class="news-link">报道：iPhone 17首发无缘国行AI，全新Air机型今年恐缺席中国市场</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">7</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">金十数据</span><span class="rank-num high">5</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://flash.jin10.com/detail/20250909091441222800" target="_blank" class="news-link">据华尔街日报：OpenAI管理层因加州对其“转型为营利公司”的政治审查趋严而担忧推进受阻，并讨论将“迁离加州”作为极端情形的备选方案。</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">8</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">财联社热门</span><span class="rank-num ">7</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.cls.cn/detail/2139052" target="_blank" class="news-link">苹果秋季发布会或缺乏亮点 分析师称iPhone 17 Air有望掀起换机潮</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">9</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">bilibili 热搜</span><span class="rank-num ">8</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://search.bilibili.com/all?keyword=TeslaAI" target="_blank" class="news-link">TeslaAI来B站了</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">10</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">Github</span><span class="rank-num ">8</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="news-link">x1xhlol /      system-prompts-and-models-of-ai-tools</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">11</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">Github</span><span class="rank-num ">9</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://github.com/microsoft/generative-ai-for-beginners" target="_blank" class="news-link">microsoft /      generative-ai-for-beginners</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">12</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">9</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/402.htm" target="_blank" class="news-link">华为终端医疗健康 ISV“彩之物”发布首款 AI 语音医嘱健康智能手表华为擎云 H3Y10</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">13</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">金十数据</span><span class="rank-num ">10</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://flash.jin10.com/detail/20250909090101650800" target="_blank" class="news-link">OpenAI正与印度数据中心商谈“星际之门”(Stargate) 项目。</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">14</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">澎湃新闻</span><span class="rank-num ">16</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://m.thepaper.cn/newsDetail_forward_31571959" target="_blank" class="news-link">AI搜索流量将超过传统搜索！大模型将如何重构搜索引擎？</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">15</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">17</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/393.htm" target="_blank" class="news-link">苹果明日将发布 AirPods Pro 3 耳机：重点升级心率监测，降噪 / 音质改进不大</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">16</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">参考消息</span><span class="rank-num ">25</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://ckxxapp.ckxx.net/pages/2025/09/08/8c24179cc35c4de5a57eef589559e236.html" target="_blank" class="news-link">涉嫌非法使用文本训练对话机器人，美国AI企业或支付巨额版权费</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">17</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">V2EX</span><span class="rank-num ">25</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.v2ex.com/t/1157773" target="_blank" class="news-link">我把 chromium 改成一个 pdf 文件的 AI 阅读器</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">18</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">V2EX</span><span class="rank-num ">30</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.v2ex.com/t/1157748" target="_blank" class="news-link">基于大模型做一款个人生活助手？</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">苹果 Apple</div>
+                            <div class="word-count hot">12 条</div>
+                        </div>
+                        <div class="word-index">2/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">V2EX</span><span class="rank-num top">2</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.v2ex.com/t/1157908" target="_blank" class="news-link">chatgpt 请站友们推荐靠谱充值方式除了苹果</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">少数π</span><span class="rank-num ">8</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://sspai.com/post/102244" target="_blank" class="news-link">Apple 发布会前瞻：全新设计、超薄机型…… 新 iPhone 还有哪些看点？</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">3</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">少数π</span><span class="rank-num ">11</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://sspai.com/post/102221" target="_blank" class="news-link">广深「超燃」：来线下，与少数派一起看 Apple 发布会</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">4</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">14</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/396.htm" target="_blank" class="news-link">追剧打卡新方式：苹果地图上线《战酋》实景导览，含 10 处剧集取景地</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">5</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">微博</span><span class="rank-num ">17</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%23%E8%8B%B9%E6%9E%9C14%E5%A4%A7%E6%96%B0%E5%93%81%E6%9B%9D%E5%85%89%23&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D1%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D17%26realpos%3D17%26q%3D%2523%25E8%258B%25B9%25E6%259E%259C14%25E5%25A4%25A7%25E6%2596%25B0%25E5%2593%2581%25E6%259B%259D%25E5%2585%2589%2523%26dgr%3D0%26pos%3D18%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">苹果14大新品曝光</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">6</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">今日头条</span><span class="rank-num ">19</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.toutiao.com/trending/7546585931466752010/" target="_blank" class="news-link">苹果发布会将推出超8款新品</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">7</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">20</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/390.htm" target="_blank" class="news-link">CounterPoint 报告 2025 上半年全球高端手机销量：苹果同比增 3%、三星增 7%、华为增 24%、小米增 55%、谷歌增 105%</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">8</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">21</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/389.htm" target="_blank" class="news-link">CounterPoint：苹果 Apple Watch 累计收入超过 1000 亿美元</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">9</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">23</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/387.htm" target="_blank" class="news-link">苹果 macOS 26 Tahoe 提醒事项被发现遗留 UI，设计追溯至 2007 年</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">10</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">25</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/385.htm" target="_blank" class="news-link">消息称苹果明日发布 M5 iPad Pro，恰逢其十周年纪念</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">11</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">bilibili 热搜</span><span class="rank-num ">26</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://search.bilibili.com/all?keyword=%E5%A5%A5%E7%89%B9%E6%9B%BC%E7%89%88badapple" target="_blank" class="news-link">奥特曼版badapple</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">12</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">28</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/382.htm" target="_blank" class="news-link">再探苹果首款自研 5G 基带 C1 芯片：国内下载中位数 190.32 Mbps，弱信号下更稳</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">小米 Xiaomi</div>
+                            <div class="word-count warm">9 条</div>
+                        </div>
+                        <div class="word-index">3/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">澎湃新闻</span><span class="rank-num top">1</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://m.thepaper.cn/newsDetail_forward_31572054" target="_blank" class="news-link">泄露公司机密，存在利益冲突！小米中国区市场部总经理王腾被辞退：过去犯了一些错误</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">bilibili 热搜</span><span class="rank-num top">2</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://search.bilibili.com/all?keyword=%E6%A2%B3%E7%90%86%E7%8E%8B%E8%85%BE%E8%A2%AB%E5%B0%8F%E7%B1%B3%E8%BE%9E%E9%80%80%E4%BA%8B%E4%BB%B6" target="_blank" class="news-link">梳理王腾被小米辞退事件</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">3</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">知乎</span><span class="rank-num high">5</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.zhihu.com/question/1948540031623984762" target="_blank" class="news-link">王腾回应因泄密被辞退，称接受该有的代价，怎样评价他在小米的发展？此事有哪些警示意义？</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">4</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">今日头条</span><span class="rank-num ">11</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.toutiao.com/trending/7547522997138066980/" target="_blank" class="news-link">知情人否认王腾泄露小米汽车定价策略</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">5</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">微博</span><span class="rank-num ">11</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%E5%B0%8F%E7%B1%B3+%E7%8E%8B%E8%85%BE&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D2%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D11%26realpos%3D11%26q%3D%25E5%25B0%258F%25E7%25B1%25B3%2520%25E7%258E%258B%25E8%2585%25BE%26dgr%3D0%26pos%3D12%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">小米 王腾</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">6</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">bilibili 热搜</span><span class="rank-num ">12</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://search.bilibili.com/all?keyword=%E5%B0%8F%E7%B1%B3%E7%8E%8B%E8%85%BE%E5%9B%A0%E6%B3%84%E5%AF%86%E8%A2%AB%E8%BE%9E%E9%80%80" target="_blank" class="news-link">小米王腾因泄密被辞退</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">7</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">12</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/398.htm" target="_blank" class="news-link">知情人士否认王腾被辞退是因为向外部机构提供小米汽车定价策略</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">8</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">微博</span><span class="rank-num ">16</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%23%E5%B0%8F%E7%B1%B3%E6%89%8B%E6%9C%BA%E7%AA%81%E7%84%B6%E7%88%86%E7%82%B8%E8%87%B43%E5%B2%81%E7%94%B7%E7%AB%A5%E5%8F%97%E4%BC%A4%23&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D1%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D16%26realpos%3D16%26q%3D%2523%25E5%25B0%258F%25E7%25B1%25B3%25E6%2589%258B%25E6%259C%25BA%25E7%25AA%2581%25E7%2584%25B6%25E7%2588%2586%25E7%2582%25B8%25E8%2587%25B43%25E5%25B2%2581%25E7%2594%25B7%25E7%25AB%25A5%25E5%258F%2597%25E4%25BC%25A4%2523%26dgr%3D0%26pos%3D17%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">小米手机突然爆炸致3岁男童受伤</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">9</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">微博</span><span class="rank-num ">26</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%23%E5%B0%8F%E7%B1%B3%E5%AE%A2%E6%9C%8D%E5%9B%9E%E5%BA%94%E6%89%8B%E6%9C%BA%E8%87%AA%E7%87%83%E8%87%B4%E7%94%B7%E7%AB%A5%E5%8F%97%E4%BC%A4%23&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D1%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D26%26realpos%3D26%26q%3D%2523%25E5%25B0%258F%25E7%25B1%25B3%25E5%25AE%25A2%25E6%259C%258D%25E5%259B%259E%25E5%25BA%2594%25E6%2589%258B%25E6%259C%25BA%25E8%2587%25AA%25E7%2587%2583%25E8%2587%25B4%25E7%2594%25B7%25E7%25AB%25A5%25E5%258F%2597%25E4%25BC%25A4%2523%26dgr%3D0%26pos%3D27%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">小米客服回应手机自燃致男童受伤</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">华为 Huawei</div>
+                            <div class="word-count ">3 条</div>
+                        </div>
+                        <div class="word-index">4/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num top">2</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/410.htm" target="_blank" class="news-link">华为 Mate XTs 非凡大师三折叠手机发布即支持星闪车钥匙功能，其他机型鸿蒙 HarmonyOS 6.0 适配</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">13</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/397.htm" target="_blank" class="news-link">米哈游《原神》鸿蒙版可使用华为账号或米哈游通行证登录，与天空岛服务器游戏进度互通</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">3</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">16</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/394.htm" target="_blank" class="news-link">华为 Mate 40 Pro 手机、MatePad 11.5 2023 款平板等升级鸿蒙 HarmonyOS 5 系统“敬请期待”</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">科技</div>
+                            <div class="word-count ">2 条</div>
+                        </div>
+                        <div class="word-index">5/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">财联社热门</span><span class="rank-num ">10</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.cls.cn/detail/2139148" target="_blank" class="news-link">华尔街科技股鼓吹手当上董事长 纳斯达克仙股暴涨3000%</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">18</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/392.htm" target="_blank" class="news-link">科技昨夜今晨 0909：苹果 iPhone 17 系列电池容量曝光；工信部向中国联通颁发卫星移动通信业务经营许可；王腾发微博回应被小米辞退...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">英伟达 NVIDIA</div>
+                            <div class="word-count ">2 条</div>
+                        </div>
+                        <div class="word-index">6/14</div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">华尔街见闻</span><span class="rank-num high">5</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://wallstreetcn.com/articles/3755160" target="_blank" class="news-link">花旗下调英伟达目标价：博通XPU正对GPU构成实质性威胁</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">27</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/383.htm" target="_blank" class="news-link">英伟达被曝要求三星电子翻倍供应 GDDR7 显存</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">微软 Microsoft</div>
+                            <div class="word-count ">2 条</div>
+                        </div>
+                        <div class="word-index">7/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">8</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/403.htm" target="_blank" class="news-link">微软 Win11 版 Copilot 应用新增“主页”：新入口可分析文件、指导用户使用软件</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">11</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/399.htm" target="_blank" class="news-link">9 月推送，微软 Win11 新版 Outlook 终于支持离线查看附件</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">腾讯 Tencent</div>
+                            <div class="word-count ">2 条</div>
+                        </div>
+                        <div class="word-index">8/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">19</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/391.htm" target="_blank" class="news-link">腾讯《英雄联盟手游》鸿蒙版被曝 9 月 12 日上线，此前已上架华为应用市场开启抢先体验</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">24</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/386.htm" target="_blank" class="news-link">腾讯《穿越火线-枪战王者》手游开启鸿蒙前瞻版测试招募，适配手机、平板设备</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">百度 Baidu</div>
+                            <div class="word-count ">2 条</div>
+                        </div>
+                        <div class="word-index">9/14</div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">百度热搜</span><span class="rank-num ">10</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.baidu.com/s?wd=%E7%BE%8E%E8%82%A1%E6%94%B6%E7%9B%98%E4%B8%AD%E6%A6%82%E8%82%A1%E6%94%B6%E6%B6%A8+%E7%99%BE%E5%BA%A6%E6%B6%A8%E8%B6%856%25" target="_blank" class="news-link">美股收盘中概股收涨 百度涨超6%</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">V2EX</span><span class="rank-num ">24</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.v2ex.com/t/1157777" target="_blank" class="news-link">百度网盘偷偷更改设备登陆规则</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">Claude Anthropic</div>
+                            <div class="word-count ">2 条</div>
+                        </div>
+                        <div class="word-index">10/14</div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">V2EX</span><span class="rank-num ">12</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.v2ex.com/t/1157868" target="_blank" class="news-link">做了个 Claude Code 中文文档站：快速开始 / 故障排查 / 模板库（持续更新）</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">2</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">V2EX</span><span class="rank-num ">29</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.v2ex.com/t/1157751" target="_blank" class="news-link">trae 后面还能用 Claude 模型吗？</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">高通 Broadcom</div>
+                            <div class="word-count ">1 条</div>
+                        </div>
+                        <div class="word-index">11/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">金十数据</span><span class="rank-num ">12</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://flash.jin10.com/detail/20250909085106895800" target="_blank" class="news-link">日本自民党官员河野太郎：若日本央行推迟加息，将推高通胀。</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">运营商 中国联通 中国移动 中国电信</div>
+                            <div class="word-count ">1 条</div>
+                        </div>
+                        <div class="word-index">12/14</div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">财联社热门</span><span class="rank-num top">2</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.cls.cn/detail/2139180" target="_blank" class="news-link">【早报】工信部向中国联通颁发卫星移动通信业务经营许可；中芯国际拟发行股份购买中芯北方49%股权，股票复牌</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">特斯拉 Tesla</div>
+                            <div class="word-count ">1 条</div>
+                        </div>
+                        <div class="word-index">13/14</div>
+                    </div>
+                    <div class="news-item ">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">IT之家</span><span class="rank-num ">22</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.ithome.com/0/881/388.htm" target="_blank" class="news-link">特斯拉万亿美元薪酬内幕曝光：马斯克“真的”威胁要离开</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="word-group">
+                    <div class="word-header">
+                        <div class="word-info">
+                            <div class="word-name">比亚迪</div>
+                            <div class="word-count ">1 条</div>
+                        </div>
+                        <div class="word-index">14/14</div>
+                    </div>
+                    <div class="news-item new">
+                        <div class="news-number">1</div>
+                        <div class="news-content">
+                            <div class="news-header">
+                                <span class="source-name">抖音</span><span class="rank-num ">23</span><span class="time-info">09时47分</span>
+                            </div>
+                            <div class="news-title"><a href="https://www.douyin.com/hot/2230207" target="_blank" class="news-link">比亚迪起诉长城坦克CEO常尧</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="new-section">
+                    <div class="new-section-title">本次新增热点 (共 29 条)</div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">今日头条 · 2条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank ">11</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.toutiao.com/trending/7547522997138066980/" target="_blank" class="news-link">知情人否认王腾泄露小米汽车定价策略</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">2</div>
+                            <div class="new-item-rank ">19</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.toutiao.com/trending/7546585931466752010/" target="_blank" class="news-link">苹果发布会将推出超8款新品</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">澎湃新闻 · 2条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank top">1</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://m.thepaper.cn/newsDetail_forward_31572054" target="_blank" class="news-link">泄露公司机密，存在利益冲突！小米中国区市场部总经理王腾被辞退：过去犯了一些错误</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">2</div>
+                            <div class="new-item-rank ">16</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://m.thepaper.cn/newsDetail_forward_31571959" target="_blank" class="news-link">AI搜索流量将超过传统搜索！大模型将如何重构搜索引擎？</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">bilibili 热搜 · 1条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank top">2</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://search.bilibili.com/all?keyword=%E6%A2%B3%E7%90%86%E7%8E%8B%E8%85%BE%E8%A2%AB%E5%B0%8F%E7%B1%B3%E8%BE%9E%E9%80%80%E4%BA%8B%E4%BB%B6" target="_blank" class="news-link">梳理王腾被小米辞退事件</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">财联社热门 · 1条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank ">10</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.cls.cn/detail/2139148" target="_blank" class="news-link">华尔街科技股鼓吹手当上董事长 纳斯达克仙股暴涨3000%</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">微博 · 3条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank ">16</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%23%E5%B0%8F%E7%B1%B3%E6%89%8B%E6%9C%BA%E7%AA%81%E7%84%B6%E7%88%86%E7%82%B8%E8%87%B43%E5%B2%81%E7%94%B7%E7%AB%A5%E5%8F%97%E4%BC%A4%23&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D1%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D16%26realpos%3D16%26q%3D%2523%25E5%25B0%258F%25E7%25B1%25B3%25E6%2589%258B%25E6%259C%25BA%25E7%25AA%2581%25E7%2584%25B6%25E7%2588%2586%25E7%2582%25B8%25E8%2587%25B43%25E5%25B2%2581%25E7%2594%25B7%25E7%25AB%25A5%25E5%258F%2597%25E4%25BC%25A4%2523%26dgr%3D0%26pos%3D17%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">小米手机突然爆炸致3岁男童受伤</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">2</div>
+                            <div class="new-item-rank ">17</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%23%E8%8B%B9%E6%9E%9C14%E5%A4%A7%E6%96%B0%E5%93%81%E6%9B%9D%E5%85%89%23&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D1%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D17%26realpos%3D17%26q%3D%2523%25E8%258B%25B9%25E6%259E%259C14%25E5%25A4%25A7%25E6%2596%25B0%25E5%2593%2581%25E6%259B%259D%25E5%2585%2589%2523%26dgr%3D0%26pos%3D18%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">苹果14大新品曝光</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">3</div>
+                            <div class="new-item-rank ">26</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://m.weibo.cn/search?containerid=100103type%3D1%26t%3D10%26q%3D%23%E5%B0%8F%E7%B1%B3%E5%AE%A2%E6%9C%8D%E5%9B%9E%E5%BA%94%E6%89%8B%E6%9C%BA%E8%87%AA%E7%87%83%E8%87%B4%E7%94%B7%E7%AB%A5%E5%8F%97%E4%BC%A4%23&amp;stream_entry_id=31&amp;isnewpage=1&amp;extparam=seat%3D1%26cate%3D5001%26flag%3D1%26stream_entry_id%3D31%26lcate%3D5001%26band_rank%3D26%26realpos%3D26%26q%3D%2523%25E5%25B0%258F%25E7%25B1%25B3%25E5%25AE%25A2%25E6%259C%258D%25E5%259B%259E%25E5%25BA%2594%25E6%2589%258B%25E6%259C%25BA%25E8%2587%25AA%25E7%2587%2583%25E8%2587%25B4%25E7%2594%25B7%25E7%25AB%25A5%25E5%258F%2597%25E4%25BC%25A4%2523%26dgr%3D0%26pos%3D27%26filter_type%3Drealtimehot%26c_type%3D31%26display_time%3D1757382446%26pre_seqid%3D17573824469300198261131" target="_blank" class="news-link">小米客服回应手机自燃致男童受伤</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">抖音 · 1条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank ">23</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.douyin.com/hot/2230207" target="_blank" class="news-link">比亚迪起诉长城坦克CEO常尧</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">IT之家 · 14条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank top">1</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/411.htm" target="_blank" class="news-link">SiFive 推出第二代 RISC-V AI 处理器内核，包含两款全新边缘 IP</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">2</div>
+                            <div class="new-item-rank top">2</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/410.htm" target="_blank" class="news-link">华为 Mate XTs 非凡大师三折叠手机发布即支持星闪车钥匙功能，其他机型鸿蒙 HarmonyOS 6.0 适配</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">3</div>
+                            <div class="new-item-rank ">8</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/403.htm" target="_blank" class="news-link">微软 Win11 版 Copilot 应用新增“主页”：新入口可分析文件、指导用户使用软件</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">4</div>
+                            <div class="new-item-rank ">9</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/402.htm" target="_blank" class="news-link">华为终端医疗健康 ISV“彩之物”发布首款 AI 语音医嘱健康智能手表华为擎云 H3Y10</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">5</div>
+                            <div class="new-item-rank ">11</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/399.htm" target="_blank" class="news-link">9 月推送，微软 Win11 新版 Outlook 终于支持离线查看附件</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">6</div>
+                            <div class="new-item-rank ">12</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/398.htm" target="_blank" class="news-link">知情人士否认王腾被辞退是因为向外部机构提供小米汽车定价策略</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">7</div>
+                            <div class="new-item-rank ">13</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/397.htm" target="_blank" class="news-link">米哈游《原神》鸿蒙版可使用华为账号或米哈游通行证登录，与天空岛服务器游戏进度互通</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">8</div>
+                            <div class="new-item-rank ">14</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/396.htm" target="_blank" class="news-link">追剧打卡新方式：苹果地图上线《战酋》实景导览，含 10 处剧集取景地</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">9</div>
+                            <div class="new-item-rank ">16</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/394.htm" target="_blank" class="news-link">华为 Mate 40 Pro 手机、MatePad 11.5 2023 款平板等升级鸿蒙 HarmonyOS 5 系统“敬请期待”</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">10</div>
+                            <div class="new-item-rank ">17</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/393.htm" target="_blank" class="news-link">苹果明日将发布 AirPods Pro 3 耳机：重点升级心率监测，降噪 / 音质改进不大</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">11</div>
+                            <div class="new-item-rank ">18</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/392.htm" target="_blank" class="news-link">科技昨夜今晨 0909：苹果 iPhone 17 系列电池容量曝光；工信部向中国联通颁发卫星移动通信业务经营许可；王腾发微博回应被小米辞退...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">12</div>
+                            <div class="new-item-rank ">19</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/391.htm" target="_blank" class="news-link">腾讯《英雄联盟手游》鸿蒙版被曝 9 月 12 日上线，此前已上架华为应用市场开启抢先体验</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">13</div>
+                            <div class="new-item-rank ">20</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/390.htm" target="_blank" class="news-link">CounterPoint 报告 2025 上半年全球高端手机销量：苹果同比增 3%、三星增 7%、华为增 24%、小米增 55%、谷歌增 105%</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">14</div>
+                            <div class="new-item-rank ">21</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.ithome.com/0/881/389.htm" target="_blank" class="news-link">CounterPoint：苹果 Apple Watch 累计收入超过 1000 亿美元</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">金十数据 · 4条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank top">3</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://flash.jin10.com/detail/20250909092002987800" target="_blank" class="news-link">OpenAI高管考虑迁离加州应对监管 避免重组受挫</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">2</div>
+                            <div class="new-item-rank high">5</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://flash.jin10.com/detail/20250909091441222800" target="_blank" class="news-link">据华尔街日报：OpenAI管理层因加州对其“转型为营利公司”的政治审查趋严而担忧推进受阻，并讨论将“迁离加州”作为极端情形的备选方案。</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">3</div>
+                            <div class="new-item-rank ">10</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://flash.jin10.com/detail/20250909090101650800" target="_blank" class="news-link">OpenAI正与印度数据中心商谈“星际之门”(Stargate) 项目。</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="new-item">
+                            <div class="new-item-number">4</div>
+                            <div class="new-item-rank ">12</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://flash.jin10.com/detail/20250909085106895800" target="_blank" class="news-link">日本自民党官员河野太郎：若日本央行推迟加息，将推高通胀。</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="new-source-group">
+                        <div class="new-source-title">V2EX · 1条</div>
+                        <div class="new-item">
+                            <div class="new-item-number">1</div>
+                            <div class="new-item-rank top">2</div>
+                            <div class="new-item-content">
+                                <div class="new-item-title"><a href="https://www.v2ex.com/t/1157908" target="_blank" class="news-link">chatgpt 请站友们推荐靠谱充值方式除了苹果</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    

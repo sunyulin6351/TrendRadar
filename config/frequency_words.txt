@@ -1,113 +1,115 @@
-胖东来
-于东来
+科技
 
-DeepSeek
-梁文锋
+人工智能
+AI
+机器学习
+深度学习
+大语言模型
+大模型
+AIGC
+生成式
+智能体
 
-华为
-鸿蒙
-HarmonyOS
-任正非
+机器人
 
-比亚迪
-王传福
+大数据
+Data
 
-大疆
-DJI
+区块链
+Blockchain
 
-宇树
-王兴兴
+元宇宙
+Metaverse
 
-智元
-灵犀
-稚晖君
-彭志辉
-
-黑神话
-冯骥
-
-影之刃零
-梁其伟
-
-哪吒
-饺子
-杨宇
-!车
-!餐
-
-三体
-流浪地球
-刘慈欣
-郭帆
-
-申奥
-
-京东
-刘强东
-
-字节
-bytedance
-张一鸣
-
-特斯拉
-马斯克
+英伟达
+NVIDIA
 
 微软
 Microsoft
 
-英伟达
-NVIDIA
-黄仁勋
-
-AMD
+苹果
+Apple
 
 谷歌
-google
-gemini
-deepmind
+Google
 
-chatgpt
-openai
-sora
+深度求索
+DeepSeek
 
-claude
+亚马逊
+Amazon
+
+高通
+Broadcom
+
+台积电
+TSMC
+
+甲骨文
+Oracle
+
+腾讯
+Tencent
+
+阿里巴巴
+Alibaba
+
+Palantir
+
+小米
+Xiaomi
+
+百度
+Baidu
+
+运营商
+中国联通
+中国移动
+中国电信
+
+OpenAI
+ChatGPT
+
+Claude
 Anthropic
 
-iphone
-ipad
-mac
-ios
+特斯拉
+Tesla
 
-ai
-!gai
-人工智能
+华为
+Huawei
 
-自动驾驶
+京东
 
-机器人
+字节跳动
 
-国产
-中国
+比亚迪
 
-美国
-日本
-韩国
+美团
 
-芯片
-光刻机
+网易
 
-科技
+Web3
+Web3.0
 
-核能
+数字孪生
 
-水电站
-雅鲁藏布江
+数据安全
+隐私计算
+联邦学习
+零知识证明
+可信执行环境
 
-新质生产力
+大数据
+数据湖
+数据仓库
+数据中台
+数据治理
+数据可视化
+数据分析
 
-月球
-登月
-火星
-宇宙
-飞船
-航空
+数据基础设施
+数联网
+数据元件
+数场
+数据空间
